@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  nginx: 
+    image: nginx:alpine
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 80:80
+    networks:
+      - bff-network
+  product-service:
+    build:
+      context: ./productService
+    networks:
+      - bff-network
+  frontend:
+    build: 
+      context: ./frontend
+    networks:
+      - bff-network
+  bff-client:
+    build: 
+      context: ./bffClient
+    networks:
+      - bff-network
+
+
+networks:
+  bff-network:
+    driver: bridge
+  
+  
+  
